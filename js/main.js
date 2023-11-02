@@ -18,6 +18,7 @@ function processBook() {
     }
 }
 function getBook() {
+    clearAllErrorMessages();
     let isbnTextBox = document.querySelector("#isbn");
     let titleTextBox = document.querySelector("#title");
     let priceTextBox = document.querySelector("#price");
@@ -45,10 +46,26 @@ function getBook() {
         isValidData = false;
         releaseDateTextBox.nextElementSibling.textContent = "Release date must be a valid date";
     }
+    if (isValidData) {
+        let addedBook = new Book();
+        addedBook.isbn = isbn;
+        addedBook.price = price;
+        addedBook.title = title;
+        addedBook.releaseDate = new Date(releaseDate);
+        return addedBook;
+    }
+    return null;
 }
 function isValidIsbn(data) {
     let regex = /^\d{13}$/;
     return regex.test(data);
 }
 function addBook(b) {
+}
+function clearAllErrorMessages() {
+    let allSpans = document.querySelectorAll("form span.error-msg");
+    for (let i = 0; i < allSpans.length; i++) {
+        let currentSpan = allSpans[i];
+        currentSpan.textContent = "";
+    }
 }
